@@ -607,13 +607,15 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following:
 
+```
       GET /.well-known/host-meta HTTP/1.1
       Host: example.com
       Accept: application/xrd+xml
-
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Content-Type: application/xrd+xml
       Content-Length: nnn
@@ -622,6 +624,7 @@ datastore concepts defined in the Network Configuration Protocol
           <Link rel='restconf' href='/restconf'/>
           <Link rel='restconf2' href='/restconf2'/>
       </XRD>
+```
 
    RESTCONF also supports a server-defined list of optional
    capabilities, which are listed by a server using the
@@ -764,12 +767,15 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following:
 
+```
       GET /.well-known/host-meta HTTP/1.1
       Host: example.com
       Accept: application/xrd+xml
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Content-Type: application/xrd+xml
       Content-Length: nnn
@@ -777,6 +783,7 @@ datastore concepts defined in the Network Configuration Protocol
       <XRD xmlns='http://docs.oasis-open.org/ns/xri/xrd-1.0'>
           <Link rel='restconf' href='/restconf'/>
       </XRD>
+```
 
    After discovering the RESTCONF API root, the client MUST use this
    value as the initial part of the path in the request URI, in any
@@ -5542,6 +5549,7 @@ Appendix B.  RESTCONF Message Examples
 
    Request from client:
 
+```
       POST /restconf/data/example-jukebox:jukebox/\
           playlist=Foo-One?insert=after&point=\
           %2Fexample-jukebox%3Ajukebox\
@@ -5560,9 +5568,11 @@ Appendix B.  RESTCONF Message Examples
            }
          ]
       }
+```
 
    Response from server:
 
+```
       HTTP/1.1 201 Created
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5570,7 +5580,7 @@ Appendix B.  RESTCONF Message Examples
       Location: https://example.com/restconf/data/\
           example-jukebox:jukebox/playlist=Foo-One/song=2
       ETag: "abcada438af"
-
+```
 
 
 #### B.3.6.  "filter" Parameter
@@ -5578,6 +5588,7 @@ Appendix B.  RESTCONF Message Examples
    The following URIs show some examples of notification filter
    specifications:
 
+```
       // filter = /event/event-class='fault'
       GET /streams/NETCONF?filter=%2Fevent%2Fevent-class%3D'fault'
 
@@ -5605,24 +5616,29 @@ Appendix B.  RESTCONF Message Examples
       // To get notifications from just two modules (e.g., m1 + m2)
       // filter=(/m1:* or /m2:*)
       GET /streams/NETCONF?filter=(%2Fm1%3A*%20or%20%2Fm2%3A*)
+```
 
 #### B.3.7.  "start-time" Parameter
 
    The following URI shows an example of the "start-time" query
    parameter:
 
+```
       // start-time = 2014-10-25T10:02:00Z
       GET /streams/NETCONF?start-time=2014-10-25T10%3A02%3A00Z
+```
 
 #### B.3.8.  "stop-time" Parameter
 
    The following URI shows an example of the "stop-time" query
    parameter:
 
+```
       // start-time = 2014-10-25T10:02:00Z
       // stop-time = 2014-10-25T12:31:00Z
       GET /mystreams/NETCONF?start-time=2014-10-25T10%3A02%3A00Z\
          &stop-time=2014-10-25T12%3A31%3A00Z
+```
 
 #### B.3.9.  "with-defaults" Parameter
 
@@ -5636,12 +5652,15 @@ Appendix B.  RESTCONF Message Examples
 
    Without query parameter:
 
+```
       GET /restconf/data/example:interfaces/interface=eth1 HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5655,6 +5674,7 @@ Appendix B.  RESTCONF Message Examples
           }
         ]
       }
+```
 
    Note that the "mtu" leaf is missing because it is set to the default
    "1500", and the server's default-handling "basic-mode" parameter is
@@ -5664,13 +5684,16 @@ Appendix B.  RESTCONF Message Examples
 
    With query parameter:
 
+```
       GET /restconf/data/example:interfaces/interface=eth1\
           ?with-defaults=report-all HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5685,6 +5708,7 @@ Appendix B.  RESTCONF Message Examples
           }
         ]
       }
+```
 
    Note that the server returns the "mtu" leaf because the "report-all"
    mode was requested with the "with-defaults" query parameter.
