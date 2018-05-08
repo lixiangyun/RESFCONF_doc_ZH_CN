@@ -796,12 +796,15 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following:
 
+```
       GET /.well-known/host-meta HTTP/1.1
       Host: example.com
       Accept: application/xrd+xml
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Content-Type: application/xrd+xml
       Content-Length: nnn
@@ -809,6 +812,7 @@ datastore concepts defined in the Network Configuration Protocol
       <XRD xmlns='http://docs.oasis-open.org/ns/xri/xrd-1.0'>
           <Link rel='restconf' href='/top/restconf'/>
       </XRD>
+```
 
    In this example, the client would use the path "/top/restconf" as the
    RESTCONF root resource.
@@ -818,12 +822,15 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following:
 
+```
       GET /top/restconf/operations HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -832,6 +839,7 @@ datastore concepts defined in the Network Configuration Protocol
       Content-Type: application/yang-data+json
 
       { "operations" : { "example-jukebox:play" : [null] } }
+```
 
    If the Extensible Resource Descriptor (XRD) contains more than one
    link relation, then only the relation named "restconf" is relevant to
@@ -865,12 +873,14 @@ datastore concepts defined in the Network Configuration Protocol
 
    YANG tree diagram for an API resource:
 
+```
      +---- {+restconf}
            +---- data
            | ...
            +---- operations?
            | ...
            +--ro yang-library-version    string
+```
 
    The "yang-api" YANG data template is defined using the "yang-data"
    extension in the "ietf-restconf" module, found in Section 8.  It
@@ -888,6 +898,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    This resource has the following child resources:
 
+```
         +----------------------+---------------------------------+
         | Child Resource       | Description                     |
         +----------------------+---------------------------------+
@@ -897,6 +908,7 @@ datastore concepts defined in the Network Configuration Protocol
         +----------------------+---------------------------------+
 
                            RESTCONF API Resource
+```
 
 #### 3.3.1.  {+restconf}/data
 
@@ -911,13 +923,16 @@ datastore concepts defined in the Network Configuration Protocol
    non-configuration data nodes that exist within the "library"
    resource, using the "content" query parameter (see Section 4.8.1).
 
+```
       GET /restconf/data/example-jukebox:jukebox/library\
           ?content=nonconfig HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -929,7 +944,7 @@ datastore concepts defined in the Network Configuration Protocol
         <album-count>59</album-count>
         <song-count>374</song-count>
       </library>
-
+```
 
 
 #### 3.3.2.  {+restconf}/operations
@@ -958,12 +973,15 @@ datastore concepts defined in the Network Configuration Protocol
 
    Example:
 
+```
       GET /restconf/yang-library-version HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -974,7 +992,7 @@ datastore concepts defined in the Network Configuration Protocol
         xmlns="urn:ietf:params:xml:ns:yang:ietf-restconf">\
         2016-06-21\
       </yang-library-version>
-
+```
 
 #### 3.4.  Datastore Resource
 
@@ -1213,6 +1231,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    Examples:
 
+```
       container top {
           list list1 {
               key "key1 key2 key3";
@@ -1227,18 +1246,23 @@ datastore concepts defined in the Network Configuration Protocol
              type uint32;
            }
        }
+```
 
    For the above YANG definition, the container "top" is defined in the
    "example-top" YANG module, and a target resource URI for leaf "X"
    would be encoded as follows:
 
+```
        /restconf/data/example-top:top/list1=key1,key2,key3/\
           list2=key4,key5/X
+```
 
    For the above YANG definition, a target resource URI for
    leaf-list "Y" would be encoded as follows:
 
+```
        /restconf/data/example-top:top/Y=instance-value
+```
 
    The following example shows how reserved characters are
    percent-encoded within a key value.  The value of "key1" contains
@@ -1250,7 +1274,9 @@ datastore concepts defined in the Network Configuration Protocol
 
    Example URL:
 
+```
       /restconf/data/example-top:top/list1=%2C%27"%3A"%20%2F,,foo
+```
 
 ##### 3.5.3.1.  ABNF for Data Resource Identifiers
 
@@ -1320,7 +1346,9 @@ datastore concepts defined in the Network Configuration Protocol
 
    An RPC operation is invoked as:
 
+```
       POST {+restconf}/operations/<operation>
+```
 
    The <operation> field identifies the module name and rpc identifier
    string for the desired operation.
@@ -1328,12 +1356,16 @@ datastore concepts defined in the Network Configuration Protocol
    For example, if "module-A" defined a "reset" RPC operation, then
    invoking the operation would be requested as follows:
 
+```
       POST /restconf/operations/module-A:reset HTTP/1.1
       Server: example.com
+```
 
    An action is invoked as:
 
+```
       POST {+restconf}/data/<data-resource-identifier>/<action>
+```
 
    where <data-resource-identifier> contains the path to the data node
    where the action is defined, and <action> is the name of the action.
@@ -1342,8 +1374,10 @@ datastore concepts defined in the Network Configuration Protocol
    container "interfaces", then invoking this action would be requested
    as follows:
 
+```
       POST /restconf/data/module-A:interfaces/reset-all HTTP/1.1
       Server: example.com
+```
 
    If the RPC operation is invoked without errors and if the "rpc" or
    "action" statement has no "output" section, the response message
@@ -1382,6 +1416,7 @@ datastore concepts defined in the Network Configuration Protocol
    The following YANG module is used for the RPC operation examples in
    this section.
 
+```
    module example-ops {
      namespace "https://example.com/ns/example-ops";
      prefix "ops";
@@ -1443,10 +1478,12 @@ datastore concepts defined in the Network Configuration Protocol
        }
      }
    }
+```
 
    The following YANG module is used for the YANG action examples in
    this section.
 
+```
    module example-actions {
      yang-version 1.1;
      namespace "https://example.com/ns/example-actions";
@@ -1502,13 +1539,14 @@ datastore concepts defined in the Network Configuration Protocol
      }
 
    }
-
+```
 
    RPC Input Example:
 
    The client might send the following POST request message to invoke
    the "reboot" RPC operation:
 
+```
       POST /restconf/operations/example-ops:reboot HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+xml
@@ -1518,15 +1556,19 @@ datastore concepts defined in the Network Configuration Protocol
        <message>Going down for system maintenance</message>
        <language>en-US</language>
       </input>
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 204 No Content
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
+```
 
    The same example request message is shown here using JSON encoding:
 
+```
       POST /restconf/operations/example-ops:reboot HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+json
@@ -1538,12 +1580,14 @@ datastore concepts defined in the Network Configuration Protocol
           "language" : "en-US"
         }
       }
+```
 
    Action Input Example:
 
    The client might send the following POST request message to invoke
    the "reset" action:
 
+```
       POST /restconf/data/example-actions:interfaces/\
          interface=eth0/reset HTTP/1.1
       Host: example.com
@@ -1552,16 +1596,19 @@ datastore concepts defined in the Network Configuration Protocol
       <input xmlns="https://example.com/ns/example-actions">
         <delay>600</delay>
       </input>
-
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 204 No Content
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
+```
 
    The same example request message is shown here using JSON encoding:
 
+```
       POST /restconf/data/example-actions:interfaces/\
         interface=eth0/reset HTTP/1.1
       Host: example.com
@@ -1571,6 +1618,7 @@ datastore concepts defined in the Network Configuration Protocol
           "delay" : 600
         }
       }
+```
 
 #### 3.6.2.  Encoding Operation Resource Output Parameters
 
@@ -1607,12 +1655,15 @@ datastore concepts defined in the Network Configuration Protocol
    The client might send the following POST request message to invoke
    the "get-reboot-info" operation:
 
+```
       POST /restconf/operations/example-ops:get-reboot-info HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -1625,9 +1676,11 @@ datastore concepts defined in the Network Configuration Protocol
           "language" : "en-US"
         }
       }
+```
 
    The same response is shown here using XML encoding:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -1638,7 +1691,7 @@ datastore concepts defined in the Network Configuration Protocol
         <message>Going down for system maintenance</message>
         <language>en-US</language>
       </output>
-
+```
 
    Action Output Example:
 
@@ -1648,13 +1701,16 @@ datastore concepts defined in the Network Configuration Protocol
    The client might send the following POST request message to invoke
    the "get-last-reset-time" action:
 
+```
       POST /restconf/data/example-actions:interfaces/\
          interface=eth0/get-last-reset-time HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -1665,6 +1721,7 @@ datastore concepts defined in the Network Configuration Protocol
           "last-reset" : "2015-10-10T02:14:11Z"
         }
       }
+```
 
 #### 3.6.3.  Encoding Operation Resource Errors
 
@@ -1681,6 +1738,7 @@ datastore concepts defined in the Network Configuration Protocol
    Using the "reboot" RPC operation from the example in Section 3.6.1,
    the client might send the following POST request message:
 
+```
       POST /restconf/operations/example-ops:reboot HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+xml
@@ -1690,9 +1748,11 @@ datastore concepts defined in the Network Configuration Protocol
         <message>Going down for system maintenance</message>
         <language>en-US</language>
       </input>
+```
 
    The server might respond with an "invalid-value" error:
 
+```
       HTTP/1.1 400 Bad Request
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -1708,9 +1768,11 @@ datastore concepts defined in the Network Configuration Protocol
           <error-message>Invalid input parameter</error-message>
         </error>
       </errors>
+```
 
    The same response is shown here using JSON encoding:
 
+```
       HTTP/1.1 400 Bad Request
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -1727,6 +1789,7 @@ datastore concepts defined in the Network Configuration Protocol
           ]
         }
       }
+```
 
 ### 3.7.  Schema Resource
 
@@ -1741,13 +1804,16 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following GET request message:
 
+```
       GET /restconf/data/ietf-yang-library:modules-state/\
           module=example-jukebox,2016-08-15/schema HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -1757,24 +1823,29 @@ datastore concepts defined in the Network Configuration Protocol
         "ietf-yang-library:schema" :
          "https://example.com/mymodules/example-jukebox/2016-08-15"
       }
+```
 
    Next, the client needs to retrieve the actual YANG schema.
 
    The client might send the following GET request message:
 
+```
       GET https://example.com/mymodules/example-jukebox/\
          2016-08-15 HTTP/1.1
       Host: example.com
       Accept: application/yang
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
       Content-Type: application/yang
 
          // entire YANG module contents deleted for this example...
+```
 
 ### 3.8.  Event Stream Resource
 
@@ -1944,14 +2015,16 @@ datastore concepts defined in the Network Configuration Protocol
    The client might request the response header fields for an XML
    representation of a specific "album" resource:
 
+```
       GET /restconf/data/example-jukebox:jukebox/\
          library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
-
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -1966,6 +2039,7 @@ datastore concepts defined in the Network Configuration Protocol
         <genre>jbox:alternative</genre>
         <year>2011</year>
       </album>
+```
 
    Refer to Appendix B.1 for more resource retrieval examples.
 
@@ -2023,14 +2097,17 @@ datastore concepts defined in the Network Configuration Protocol
    To create a new "jukebox" resource, the client might send the
    following:
 
+```
       POST /restconf/data HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+json
 
       { "example-jukebox:jukebox" : {} }
+```
 
    If the resource is created, the server might respond as follows:
 
+```
       HTTP/1.1 201 Created
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -2038,6 +2115,7 @@ datastore concepts defined in the Network Configuration Protocol
           example-jukebox:jukebox
       Last-Modified: Thu, 26 Jan 2017 20:56:30 GMT
       ETag: "b3a3e673be2"
+```
 
    Refer to Appendix B.2.1 for more resource creation examples.
 
@@ -2067,6 +2145,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    A client might send a "play" request as follows:
 
+```
       POST /restconf/operations/example-jukebox:play HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+json
@@ -2077,13 +2156,15 @@ datastore concepts defined in the Network Configuration Protocol
           "song-number" : 2
         }
       }
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 204 No Content
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
-
+```
 
 
 ### 4.5.  PUT
@@ -2141,6 +2222,7 @@ datastore concepts defined in the Network Configuration Protocol
    To replace the "album" resource contents, the client might send the
    following:
 
+```
       PUT /restconf/data/example-jukebox:jukebox/\
           library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
       Host: example.com
@@ -2155,17 +2237,21 @@ datastore concepts defined in the Network Configuration Protocol
           }
         ]
       }
+```
 
    If the resource is updated, the server might respond as follows:
 
+```
       HTTP/1.1 204 No Content
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
       Last-Modified: Thu, 26 Jan 2017 20:56:30 GMT
       ETag: "b27480aeda4c"
+```
 
    The same request is shown here using XML encoding:
 
+```
       PUT /restconf/data/example-jukebox:jukebox/\
           library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
       Host: example.com
@@ -2177,6 +2263,7 @@ datastore concepts defined in the Network Configuration Protocol
         <genre>jbox:alternative</genre>
         <year>2011</year>
       </album>
+```
 
    Refer to Appendix B.2.4 for an example using the PUT method to
    replace the contents of the datastore resource.
@@ -2244,6 +2331,7 @@ datastore concepts defined in the Network Configuration Protocol
    replacing the entire resource with the PUT method), the client might
    send a plain patch as follows:
 
+```
       PATCH /restconf/data/example-jukebox:jukebox/\
           library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
       Host: example.com
@@ -2253,14 +2341,17 @@ datastore concepts defined in the Network Configuration Protocol
       <album xmlns="http://example.com/ns/example-jukebox">
        <year>2011</year>
       </album>
+```
 
    If the field is updated, the server might respond as follows:
 
+```
       HTTP/1.1 204 No Content
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
       Last-Modified: Thu, 26 Jan 2017 20:56:30 GMT
       ETag: "b2788923da4c"
+```
 
 ### 4.7.  DELETE
 
@@ -2286,15 +2377,19 @@ datastore concepts defined in the Network Configuration Protocol
    To delete the "album" resource with the key "Wasting Light", the
    client might send the following:
 
+```
       DELETE /restconf/data/example-jukebox:jukebox/\
           library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
       Host: example.com
+```
 
    If the resource is deleted, the server might respond as follows:
 
+```
       HTTP/1.1 204 No Content
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
+```
 
 ### 4.8.  Query Parameters
 
@@ -2319,7 +2414,7 @@ datastore concepts defined in the Network Configuration Protocol
       if a query parameter is unexpected.  The error-tag value
       "invalid-value" is returned in this case.
 
-
+```
    +---------------+---------+-----------------------------------------+
    | Name          | Methods | Description                             |
    +---------------+---------+-----------------------------------------+
@@ -2350,7 +2445,7 @@ datastore concepts defined in the Network Configuration Protocol
    | with-defaults | GET,    | Control the retrieval of default values |
    |               | HEAD    |                                         |
    +---------------+---------+-----------------------------------------+
-
+```
                          RESTCONF Query Parameters
 
    Refer to Appendix B.3 for examples of query parameter usage.
@@ -2369,6 +2464,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    The allowed values are:
 
+```
     +-----------+-----------------------------------------------------+
     | Value     | Description                                         |
     +-----------+-----------------------------------------------------+
@@ -2378,6 +2474,7 @@ datastore concepts defined in the Network Configuration Protocol
     |           |                                                     |
     | all       | Return all descendant data nodes                    |
     +-----------+-----------------------------------------------------+
+```
 
    This parameter is only allowed for GET methods on datastore and data
    resources.  A "400 Bad Request" status-line is returned if used for
@@ -2433,8 +2530,10 @@ datastore concepts defined in the Network Configuration Protocol
 
    A value of the "fields" query parameter matches the following rule:
 
+```
     fields-expr = path "(" fields-expr ")" / path ";" fields-expr / path
     path = api-identifier [ "/" path ]
+```
 
    "api-identifier" is defined in Section 3.5.3.1.
 
@@ -2699,6 +2798,7 @@ datastore concepts defined in the Network Configuration Protocol
    A RESTCONF operation is derived from the HTTP method and the request
    URI, using the following conceptual fields:
 
+```
         <OP> /<restconf>/<path>?<query>
 
           ^       ^        ^       ^
@@ -2715,6 +2815,7 @@ datastore concepts defined in the Network Configuration Protocol
          <restconf> is the RESTCONF root resource
          <path> is the target resource URI
          <query> is the query parameter list
+```
 
    o  method: the HTTP method identifying the RESTCONF operation
       requested by the client, to act upon the target resource specified
@@ -2821,13 +2922,16 @@ datastore concepts defined in the Network Configuration Protocol
 
 #### 5.3.1.  XML Metadata Encoding Example
 
+```
       GET /restconf/data/interfaces/interface=eth1
           ?with-defaults=report-all-tagged HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -2840,7 +2944,7 @@ datastore concepts defined in the Network Configuration Protocol
           wd:default="true">1500</mtu>
         <status>up</status>
       </interface>
-
+```
 
 
 #### 5.3.2.  JSON Metadata Encoding Example
@@ -2850,13 +2954,16 @@ datastore concepts defined in the Network Configuration Protocol
    be assigned instead of derived from the YANG module.  The value
    "ietf-netconf-with-defaults" is assigned for JSON metadata encoding.
 
+```
       GET /restconf/data/interfaces/interface=eth1\
           ?with-defaults=report-all-tagged HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -2874,6 +2981,7 @@ datastore concepts defined in the Network Configuration Protocol
           }
         ]
       }
+```
 
 ### 5.4.  Return Status
 
@@ -2929,8 +3037,6 @@ datastore concepts defined in the Network Configuration Protocol
    returned (e.g., a "404 Not Found" status-line).
 
 
-
-
 ### 6.2.  Event Streams
 
    A RESTCONF server that supports notifications will populate a stream
@@ -2947,13 +3053,16 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following request:
 
+```
       GET /restconf/data/ietf-restconf-monitoring:restconf-state/\
           streams HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
+```
 
    The server might send the following response:
 
+```
       HTTP/1.1 200 OK
       Content-Type: application/yang-data+xml
 
@@ -3002,6 +3111,7 @@ datastore concepts defined in the Network Configuration Protocol
             </access>
          </stream>
       </streams>
+```
 
 ### 6.3.  Subscribing to Receive Notifications
 
@@ -3024,13 +3134,16 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following request:
 
+```
       GET /restconf/data/ietf-restconf-monitoring:restconf-state/\
           streams/stream=NETCONF/access=xml/location HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
+```
 
    The server might send the following response:
 
+```
       HTTP/1.1 200 OK
       Content-Type: application/yang-data+xml
 
@@ -3038,26 +3151,30 @@ datastore concepts defined in the Network Configuration Protocol
         xmlns="urn:ietf:params:xml:ns:yang:ietf-restconf-monitoring">\
         https://example.com/streams/NETCONF\
       </location>
+```
 
    The RESTCONF client can then use this URL value to start monitoring
    the event stream:
 
+```
       GET /streams/NETCONF HTTP/1.1
       Host: example.com
       Accept: text/event-stream
       Cache-Control: no-cache
       Connection: keep-alive
+```
 
    A RESTCONF client MAY request that the server compress the events
    using the HTTP header field "Accept-Encoding".  For instance:
 
+```
       GET /streams/NETCONF HTTP/1.1
       Host: example.com
       Accept: text/event-stream
       Cache-Control: no-cache
       Connection: keep-alive
       Accept-Encoding: gzip, deflate
-
+```
 
 
 #### 6.3.1.  NETCONF Event Stream
@@ -3101,6 +3218,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    In the following example, the YANG module "example-mod" is used:
 
+```
      module example-mod {
        namespace "http://example.com/event/1.0";
        prefix ex;
@@ -3132,9 +3250,11 @@ datastore concepts defined in the Network Configuration Protocol
          }
        }
      }
+```
 
    An example SSE event notification encoded using XML:
 
+```
       data: <notification
       data:    xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
       data:    <eventTime>2013-12-21T00:01:00Z</eventTime>
@@ -3146,9 +3266,11 @@ datastore concepts defined in the Network Configuration Protocol
       data:       <severity>major</severity>
       data:     </event>
       data: </notification>
+```
 
    An example SSE event notification encoded using JSON:
 
+```
       data: {
       data:   "ietf-restconf:notification" : {
       data:     "eventTime" : "2013-12-21T00:01:00Z",
@@ -3159,10 +3281,12 @@ datastore concepts defined in the Network Configuration Protocol
       data:     }
       data:   }
       data: }
+```
 
    Alternatively, since neither XML nor JSON is whitespace sensitive,
    the above messages can be encoded onto a single line.  For example:
 
+```
       XML:
 
       data: <notification xmlns="urn:ietf:params:xml:ns:netconf:notif\
@@ -3176,6 +3300,8 @@ datastore concepts defined in the Network Configuration Protocol
       data: {"ietf-restconf:notification":{"eventTime":"2013-12-21\
       T00:01:00Z","example-mod:event":{"event-class": "fault","repor\
       tingEntity":{"card":"Ethernet0"},"severity":"major"}}}
+```
+
 
    The SSE specification supports the following additional fields:
    "event", "id", and "retry".  A RESTCONF server MAY send the "retry"
@@ -3205,7 +3331,7 @@ datastore concepts defined in the Network Configuration Protocol
    data model and might be contained in the YANG "description" statement
    for the "action" or "rpc" statement.
 
-
+```
               +-------------------------+------------------+
               | error-tag               | status code      |
               +-------------------------+------------------+
@@ -3251,7 +3377,7 @@ datastore concepts defined in the Network Configuration Protocol
               +-------------------------+------------------+
 
                   Mapping from <error-tag> to Status Code
-
+```
 
 
 ### 7.1.  Error Response Message
@@ -3278,6 +3404,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    YANG tree diagram for <errors> data:
 
+```
      +---- errors
            +---- error*
               +---- error-type       enumeration
@@ -3286,6 +3413,7 @@ datastore concepts defined in the Network Configuration Protocol
               +---- error-path?      instance-identifier
               +---- error-message?   string
               +---- error-info?
+```
 
    The semantics and syntax for RESTCONF error messages are defined with
    the "yang-errors" YANG data template extension, found in Section 8.
@@ -3300,16 +3428,19 @@ datastore concepts defined in the Network Configuration Protocol
    the error message.  There would be no response message-body content
    if this operation was successful.
 
+```
       DELETE /restconf/data/example-jukebox:jukebox/\
          library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
-
+```
 
 
 
    The server might respond as follows:
 
+
+```
       HTTP/1.1 409 Conflict
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -3326,6 +3457,7 @@ datastore concepts defined in the Network Configuration Protocol
           ]
         }
       }
+```
 
    The following example shows an error returned for a "data-exists"
    error on a data resource.  The "jukebox" resource already exists, so
@@ -3333,14 +3465,16 @@ datastore concepts defined in the Network Configuration Protocol
 
    The client might send the following:
 
+```
       POST /restconf/data/example-jukebox:jukebox HTTP/1.1
       Host: example.com
-
+```
 
 
 
    The server might respond as follows:
 
+```
       HTTP/1.1 409 Conflict
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -3360,7 +3494,7 @@ datastore concepts defined in the Network Configuration Protocol
           </error-message>
         </error>
       </errors>
-
+```
 
 ## 8.  RESTCONF Module
 
@@ -3373,6 +3507,7 @@ datastore concepts defined in the Network Configuration Protocol
    Note that the "ietf-restconf" module does not have any
    protocol-accessible objects, so no YANG tree diagram is shown.
 
+```
    <CODE BEGINS>
 
    file "ietf-restconf@2017-01-26.yang"
@@ -3664,6 +3799,7 @@ datastore concepts defined in the Network Configuration Protocol
    }
 
    <CODE ENDS>
+```
 
 ## 9.  RESTCONF Monitoring
 
@@ -3674,6 +3810,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    YANG tree diagram for the "ietf-restconf-monitoring" module:
 
+```
       +--ro restconf-state
          +--ro capabilities
          |  +--ro capability*   inet:uri
@@ -3686,7 +3823,7 @@ datastore concepts defined in the Network Configuration Protocol
                +--ro access* [encoding]
                   +--ro encoding  string
                   +--ro location  inet:uri
-
+```
 
 
 
@@ -3724,6 +3861,7 @@ datastore concepts defined in the Network Configuration Protocol
    The server MUST include a "capability" leaf-list entry for each
    optional query parameter that it supports.
 
+```
    +----------------+---------+---------------------------------------+
    | Name           | Section | URI                                   |
    |                |         |                                       |
@@ -3745,6 +3883,7 @@ datastore concepts defined in the Network Configuration Protocol
    +----------------+---------+---------------------------------------+
 
                        RESTCONF Query Parameter URIs
+```
 
 #### 9.1.2.  The "defaults" Protocol Capability URI
 
@@ -3754,6 +3893,7 @@ datastore concepts defined in the Network Configuration Protocol
    server and MUST be listed in the "capability" leaf-list defined in
    Section 9.3.
 
+```
       +----------+--------------------------------------------------+
       | Name     | URI                                              |
       +----------+--------------------------------------------------+
@@ -3761,7 +3901,7 @@ datastore concepts defined in the Network Configuration Protocol
       +----------+--------------------------------------------------+
 
                     RESTCONF "defaults" Capability URI
-
+```
 
 
 
@@ -3795,8 +3935,10 @@ datastore concepts defined in the Network Configuration Protocol
 
    Example (split for display purposes only):
 
+```
       urn:ietf:params:restconf:capability:defaults:1.0?
            basic-mode=explicit
+```
 
 ### 9.2.  restconf-state/streams
 
@@ -3822,6 +3964,7 @@ datastore concepts defined in the Network Configuration Protocol
    The "ietf-yang-types" and "ietf-inet-types" modules from [RFC6991]
    are used by this module for some type definitions.
 
+```
    <CODE BEGINS>
 
    file "ietf-restconf-monitoring@2017-01-26.yang"
@@ -3980,6 +4123,7 @@ datastore concepts defined in the Network Configuration Protocol
    }
 
    <CODE ENDS>
+```
 
 ## 10.  YANG Module Library
 
@@ -4011,6 +4155,7 @@ datastore concepts defined in the Network Configuration Protocol
    This specification registers the "restconf" relation type in the
    "Link Relation Types" registry defined by [RFC5988]:
 
+```
       Relation Name: restconf
 
       Description: Identifies the root of the RESTCONF API as configured
@@ -4020,12 +4165,14 @@ datastore concepts defined in the Network Configuration Protocol
                    relation values to support protocol versioning.
 
       Reference: RFC 8040
+```
 
 ### 11.2.  Registrations for New URIs and YANG Modules
 
    This document registers two URIs as namespaces in the "IETF XML
    Registry" [RFC3688]:
 
+```
      URI: urn:ietf:params:xml:ns:yang:ietf-restconf
      Registrant Contact: The IESG.
      XML: N/A; the requested URI is an XML namespace.
@@ -4033,10 +4180,12 @@ datastore concepts defined in the Network Configuration Protocol
      URI: urn:ietf:params:xml:ns:yang:ietf-restconf-monitoring
      Registrant Contact: The IESG.
      XML: N/A; the requested URI is an XML namespace.
+```
 
    This document registers two YANG modules in the "YANG Module Names"
    registry [RFC6020]:
 
+```
      name:         ietf-restconf
      namespace:    urn:ietf:params:xml:ns:yang:ietf-restconf
      prefix:       rc
@@ -4046,7 +4195,7 @@ datastore concepts defined in the Network Configuration Protocol
      namespace:    urn:ietf:params:xml:ns:yang:ietf-restconf-monitoring
      prefix:       rcmon
      reference:    RFC 8040
-
+```
 
 
 ### 11.3.  Media Types
@@ -4186,6 +4335,7 @@ datastore concepts defined in the Network Configuration Protocol
    This document registers several capability identifiers in the
    "RESTCONF Capability URNs" registry:
 
+```
    Index           Capability Identifier
    ---------------------------------------------------------------------
    :defaults       urn:ietf:params:restconf:capability:defaults:1.0
@@ -4199,6 +4349,7 @@ datastore concepts defined in the Network Configuration Protocol
    :replay         urn:ietf:params:restconf:capability:replay:1.0
 
    :with-defaults  urn:ietf:params:restconf:capability:with-defaults:1.0
+```
 
 ### 11.5.  Registration of "restconf" URN Sub-namespace
 
@@ -4487,6 +4638,7 @@ Appendix A.  Example YANG Module
 
    YANG tree diagram for the "example-jukebox" module:
 
+```
       +--rw jukebox!
          +--rw library
          |  +--rw artist* [name]
@@ -4521,10 +4673,11 @@ Appendix A.  Example YANG Module
          +--ro input
             +--ro playlist       string
             +--ro song-number    uint32
-
+```
 
 ### A.1.  "example-jukebox" YANG Module
 
+```
    module example-jukebox {
 
       namespace "http://example.com/ns/example-jukebox";
@@ -4781,7 +4934,7 @@ Appendix A.  Example YANG Module
         }
       }
    }
-
+```
 
 Appendix B.  RESTCONF Message Examples
 
@@ -4797,13 +4950,15 @@ Appendix B.  RESTCONF Message Examples
 
    The client starts by retrieving the RESTCONF root resource:
 
+```
       GET /.well-known/host-meta HTTP/1.1
       Host: example.com
       Accept: application/xrd+xml
-
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Content-Type: application/xrd+xml
       Content-Length: nnn
@@ -4811,16 +4966,20 @@ Appendix B.  RESTCONF Message Examples
       <XRD xmlns='http://docs.oasis-open.org/ns/xri/xrd-1.0'>
           <Link rel='restconf' href='/restconf'/>
       </XRD>
+```
 
    The client may then retrieve the top-level API resource, using the
    root resource "/restconf".
 
+```
       GET /restconf HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -4833,18 +4992,21 @@ Appendix B.  RESTCONF Message Examples
           "yang-library-version" : "2016-06-21"
         }
       }
+```
 
    To request that the response content be encoded in XML, the "Accept"
    header can be used, as in this example request:
 
+```
       GET /restconf HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
-
+```
 
    The server will return the same conceptual data either way, which
    might be as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -4856,6 +5018,7 @@ Appendix B.  RESTCONF Message Examples
         <operations/>
         <yang-library-version>2016-06-21</yang-library-version>
       </restconf>
+```
 
 ### B.1.2.  Retrieve the Server Module Information
 
@@ -4867,12 +5030,15 @@ Appendix B.  RESTCONF Message Examples
    In this example, the client is retrieving the module information from
    the server in JSON format:
 
+```
       GET /restconf/data/ietf-yang-library:modules-state HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -4940,7 +5106,7 @@ Appendix B.  RESTCONF Message Examples
           ]
         }
       }
-
+```
 
 #### B.1.3.  Retrieve the Server Capability Information
 
@@ -4948,13 +5114,16 @@ Appendix B.  RESTCONF Message Examples
    from the server in XML format, and the server supports all of the
    RESTCONF query parameters, plus one vendor parameter:
 
+```
       GET /restconf/data/ietf-restconf-monitoring:restconf-state/\
           capabilities HTTP/1.1
       Host: example.com
       Accept: application/yang-data+xml
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -4990,7 +5159,7 @@ Appendix B.  RESTCONF Message Examples
         http://example.com/capabilities/myparam\
        </capability>
       </capabilities>
-
+```
 
 
 ### B.2.  Data Resource and Datastore Resource Examples
@@ -5000,6 +5169,7 @@ Appendix B.  RESTCONF Message Examples
    To create a new "artist" resource within the "library" resource, the
    client might send the following request:
 
+```
       POST /restconf/data/example-jukebox:jukebox/library HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+json
@@ -5011,9 +5181,11 @@ Appendix B.  RESTCONF Message Examples
           }
         ]
       }
+```
 
    If the resource is created, the server might respond as follows:
 
+```
       HTTP/1.1 201 Created
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5021,11 +5193,12 @@ Appendix B.  RESTCONF Message Examples
           example-jukebox:jukebox/library/artist=Foo%20Fighters
       Last-Modified: Thu, 26 Jan 2017 20:56:30 GMT
       ETag: "b3830f23a4c"
-
+```
 
    To create a new "album" resource for this artist within the "jukebox"
    resource, the client might send the following request:
 
+```
       POST /restconf/data/example-jukebox:jukebox/\
           library/artist=Foo%20Fighters HTTP/1.1
       Host: example.com
@@ -5035,9 +5208,11 @@ Appendix B.  RESTCONF Message Examples
         <name>Wasting Light</name>
         <year>2011</year>
       </album>
+```
 
    If the resource is created, the server might respond as follows:
 
+```
       HTTP/1.1 201 Created
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5046,6 +5221,7 @@ Appendix B.  RESTCONF Message Examples
           album=Wasting%20Light
       Last-Modified: Thu, 26 Jan 2017 20:56:30 GMT
       ETag: "b8389233a4c"
+```
 
 #### B.2.2.  Detect Datastore Resource Entity-Tag Change
 
@@ -5056,6 +5232,7 @@ Appendix B.  RESTCONF Message Examples
    patch an "album" list entry with a key value of "Wasting Light".
    Only the "genre" field is being updated.
 
+```
       PATCH /restconf/data/example-jukebox:jukebox/\
           library/artist=Foo%20Fighters/album=Wasting%20Light/\
           genre HTTP/1.1
@@ -5064,18 +5241,19 @@ Appendix B.  RESTCONF Message Examples
       Content-Type: application/yang-data+json
 
       { "example-jukebox:genre" : "example-jukebox:alternative" }
-
+```
 
    In this example, the datastore resource has changed since the time
    specified in the "If-Unmodified-Since" header.  The server might
    respond as follows:
 
+```
       HTTP/1.1 412 Precondition Failed
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
       Last-Modified: Thu, 26 Jan 2017 19:41:00 GMT
       ETag: "b34aed893a4c"
-
+```
 
 #### B.2.3.  Edit a Datastore Resource
 
@@ -5083,16 +5261,19 @@ Appendix B.  RESTCONF Message Examples
    "system" from the example-system module, and this container has a
    child leaf called "enable-jukebox-streaming":
 
+```
       container system {
         leaf enable-jukebox-streaming {
           type boolean;
         }
       }
+```
 
    In this example, PATCH is used by the client to modify two top-level
    resources at once, in order to enable jukebox streaming and add an
    "album" sub-resource to each of two "artist" resources:
 
+```
       PATCH /restconf/data HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+xml
@@ -5120,7 +5301,7 @@ Appendix B.  RESTCONF Message Examples
           </library>
         </jukebox>
       </data>
-
+```
 
 #### B.2.4.  Replace a Datastore Resource
 
@@ -5128,6 +5309,7 @@ Appendix B.  RESTCONF Message Examples
    being replaced.  Any child nodes not present in the <data> element
    but present in the server will be deleted.
 
+```
       PUT /restconf/data HTTP/1.1
       Host: example.com
       Content-Type: application/yang-data+xml
@@ -5152,12 +5334,14 @@ Appendix B.  RESTCONF Message Examples
           </library>
         </jukebox>
       </data>
+```
 
 #### B.2.5.  Edit a Data Resource
 
    In this example, the client modifies one data node by adding an
    "album" sub-resource by sending a PATCH for the data resource:
 
+```
       PATCH /restconf/data/example-jukebox:jukebox/library/\
          artist=Nick%20Cave%20and%20the%20Bad%20Seeds HTTP/1.1
       Host: example.com
@@ -5170,7 +5354,7 @@ Appendix B.  RESTCONF Message Examples
           <year>1990</year>
         </album>
       </artist>
-
+```
 
 ### B.3.  Query Parameter Examples
 
@@ -5183,6 +5367,7 @@ Appendix B.  RESTCONF Message Examples
    In this example, a simple YANG list is used that has configuration
    and non-configuration child resources.
 
+```
      container events {
        list event {
          key name;
@@ -5194,6 +5379,7 @@ Appendix B.  RESTCONF Message Examples
          }
        }
      }
+```
 
    Example 1: content=all
 
@@ -5201,13 +5387,16 @@ Appendix B.  RESTCONF Message Examples
    set to "all", or omitted, since this is the default value.  The
    client might send the following:
 
+```
       GET /restconf/data/example-events:events?\
           content=all HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5230,7 +5419,7 @@ Appendix B.  RESTCONF Message Examples
           ]
         }
       }
-
+```
 
    Example 2: content=config
 
@@ -5239,13 +5428,16 @@ Appendix B.  RESTCONF Message Examples
    "Last-Modified" headers are only returned if the "content" parameter
    value is "config".
 
+```
       GET /restconf/data/example-events:events?\
           content=config HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5268,7 +5460,7 @@ Appendix B.  RESTCONF Message Examples
           ]
         }
       }
-
+```
 
 
    Example 3: content=nonconfig
@@ -5278,13 +5470,16 @@ Appendix B.  RESTCONF Message Examples
    (if any) and list key leafs (if any) are also returned.  The client
    might send the following:
 
+```
       GET /restconf/data/example-events:events?\
          content=nonconfig HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5305,6 +5500,7 @@ Appendix B.  RESTCONF Message Examples
           ]
         }
       }
+```
 
 #### B.3.2.  "depth" Parameter
 
@@ -5325,13 +5521,16 @@ Appendix B.  RESTCONF Message Examples
    To retrieve all of the child resources, the "depth" parameter is not
    present or is set to the default value "unbounded".
 
+```
       GET /restconf/data/example-jukebox:jukebox?\
           depth=unbounded HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5396,19 +5595,22 @@ Appendix B.  RESTCONF Message Examples
           }
         }
       }
-
+```
 
    Example 2: depth=1
 
    To determine if one or more resource instances exist for a given
    target resource, the value "1" is used.
 
+```
       GET /restconf/data/example-jukebox:jukebox?depth=1 HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5418,19 +5620,22 @@ Appendix B.  RESTCONF Message Examples
       {
         "example-jukebox:jukebox" : {}
       }
-
+```
 
    Example 3: depth=3
 
    To limit the depth level to the target resource plus two child
    resource layers, the value "3" is used.
 
+```
       GET /restconf/data/example-jukebox:jukebox?depth=3 HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5454,6 +5659,7 @@ Appendix B.  RESTCONF Message Examples
           }
         }
       }
+```
 
 #### B.3.3.  "fields" Parameter
 
@@ -5464,13 +5670,16 @@ Appendix B.  RESTCONF Message Examples
    (which is "data" in this example).  The "module-set-id" leaf is not
    returned because it is not selected in the fields expression.
 
+```
       GET /restconf/data?fields=ietf-yang-library:modules-state/\
           module(name;revision) HTTP/1.1
       Host: example.com
       Accept: application/yang-data+json
+```
 
    The server might respond as follows:
 
+```
       HTTP/1.1 200 OK
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5504,7 +5713,7 @@ Appendix B.  RESTCONF Message Examples
           }
         }
       }
-
+```
 
 
 #### B.3.4.  "insert" Parameter
@@ -5514,6 +5723,7 @@ Appendix B.  RESTCONF Message Examples
 
    Request from client:
 
+```
       POST /restconf/data/example-jukebox:jukebox/\
           playlist=Foo-One?insert=first HTTP/1.1
       Host: example.com
@@ -5530,9 +5740,11 @@ Appendix B.  RESTCONF Message Examples
            }
          ]
       }
+```
 
    Response from server:
 
+```
       HTTP/1.1 201 Created
       Date: Thu, 26 Jan 2017 20:56:30 GMT
       Server: example-server
@@ -5540,7 +5752,7 @@ Appendix B.  RESTCONF Message Examples
       Location: https://example.com/restconf/data/\
           example-jukebox:jukebox/playlist=Foo-One/song=1
       ETag: "eeeada438af"
-
+```
 
 #### B.3.5.  "point" Parameter
 
