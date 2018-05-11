@@ -213,176 +213,176 @@ datastore concepts defined in the Network Configuration Protocol
 
    The following terms are defined in [RFC6241]:
 
-   o  candidate configuration datastore
+   -  candidate configuration datastore
 
-   o  configuration data
+   -  configuration data
 
-   o  datastore
+   -  datastore
 
-   o  configuration datastore
+   -  configuration datastore
 
-   o  running configuration datastore
+   -  running configuration datastore
 
-   o  startup configuration datastore
+   -  startup configuration datastore
 
-   o  state data
+   -  state data
 
-   o  user
+   -  user
 
 #### 1.1.2.  HTTP
 
    The following terms are defined in [RFC3986]:
 
-   o  fragment
+   -  fragment
 
-   o  path
+   -  path
 
-   o  query
+   -  query
 
    The following terms are defined in [RFC7230]:
 
-   o  header field
+   -  header field
 
-   o  message-body
+   -  message-body
 
-   o  request-line
+   -  request-line
 
-   o  request URI
+   -  request URI
 
-   o  status-line
+   -  status-line
 
    The following terms are defined in [RFC7231]:
 
-   o  method
+   -  method
 
-   o  request
+   -  request
 
-   o  resource
+   -  resource
 
    The following term is defined in [RFC7232]:
 
-   o  entity-tag
+   -  entity-tag
 
 #### 1.1.3.  YANG
 
    The following terms are defined in [RFC7950]:
 
-   o  action
+   -  action
 
-   o  container
+   -  container
 
-   o  data node
+   -  data node
 
-   o  key leaf
+   -  key leaf
 
-   o  leaf
+   -  leaf
 
-   o  leaf-list
+   -  leaf-list
 
-   o  list
+   -  list
 
-   o  mandatory node
+   -  mandatory node
 
-   o  ordered-by user
+   -  ordered-by user
 
-   o  presence container
+   -  presence container
 
-   o  RPC operation
+   -  RPC operation
 
-   o  top-level data node
+   -  top-level data node
 
 #### 1.1.4.  NETCONF Notifications
 
    The following term is defined in [RFC5277]:
 
-   o  notification replay
+   -  notification replay
 
 
 1.1.5.  Terms
 
    The following terms are used within this document:
 
-   o  API resource: the resource that models the RESTCONF root resource
+   -  API resource: the resource that models the RESTCONF root resource
       and the sub-resources to access YANG-defined content.  It is
       defined with the YANG data template named "yang-api" in the
       "ietf-restconf" module.
 
-   o  client: a RESTCONF client.
+   -  client: a RESTCONF client.
 
-   o  data resource: a resource that models a YANG data node.  It is
+   -  data resource: a resource that models a YANG data node.  It is
       defined with YANG data definition statements.
 
-   o  datastore resource: the resource that models a programmatic
+   -  datastore resource: the resource that models a programmatic
       interface using NETCONF datastore concepts.  By default, RESTCONF
       methods access a unified view of the underlying datastore
       implementation on the server.  It is defined as a sub-resource
       within the API resource.
 
-   o  edit operation: a RESTCONF operation on a data resource using
+   -  edit operation: a RESTCONF operation on a data resource using
       either a POST, PUT, PATCH, or DELETE method.  This is not the same
       as the NETCONF edit operation (i.e., one of the values for the
       "nc:operation" attribute: "create", "replace", "merge", "delete",
       or "remove").
 
-   o  event stream resource: a resource that represents an SSE
+   -  event stream resource: a resource that represents an SSE
       (Server-Sent Events) event stream.  The content consists of text
       using the media type "text/event-stream", as defined by the SSE
       specification [W3C.REC-eventsource-20150203].  Event stream
       contents are described in Section 3.8.
 
-   o  media type: HTTP uses Internet media types [RFC2046] in the
+   -  media type: HTTP uses Internet media types [RFC2046] in the
       "Content-Type" and "Accept" header fields in order to provide open
       and extensible data typing and type negotiation.
 
-   o  NETCONF client: a client that implements the NETCONF protocol.
+   -  NETCONF client: a client that implements the NETCONF protocol.
       Called "client" in [RFC6241].
 
-   o  NETCONF server: a server that implements the NETCONF protocol.
+   -  NETCONF server: a server that implements the NETCONF protocol.
       Called "server" in [RFC6241].
 
-   o  operation: the conceptual RESTCONF operation for a message,
+   -  operation: the conceptual RESTCONF operation for a message,
       derived from the HTTP method, request URI, header fields, and
       message-body.
 
-   o  operation resource: a resource that models a data-model-specific
+   -  operation resource: a resource that models a data-model-specific
       operation that is in turn defined with a YANG "rpc" or "action"
       statement.  It is invoked with the POST method.
 
-   o  patch: a PATCH method on the target datastore or data resource.
+   -  patch: a PATCH method on the target datastore or data resource.
       The media type of the message-body content will identify the patch
       type in use.
 
-   o  plain patch: a specific media type for use with the PATCH method;
+   -  plain patch: a specific media type for use with the PATCH method;
       see Section 4.6.1.  It can be used for simple "merge" edit
       operations.  It is specified by a request Content-Type of
       "application/yang-data+xml" or "application/yang-data+json".
 
-   o  query parameter: a parameter (and its value, if any), encoded
+   -  query parameter: a parameter (and its value, if any), encoded
       within the query component of the request URI.
 
-   o  resource type: one of the RESTCONF resource classes defined in
+   -  resource type: one of the RESTCONF resource classes defined in
       this document.  One of "api", "datastore", "data", "operation",
       "schema", or "event stream".
 
-   o  RESTCONF capability: an optional RESTCONF protocol feature that is
+   -  RESTCONF capability: an optional RESTCONF protocol feature that is
       advertised by a particular server if the feature is supported on
       that server.  The feature is identified by an IANA-registered
       NETCONF Capability URI and advertised with an entry in the
       "capability" leaf-list defined in Section 9.3.
 
-   o  RESTCONF client: a client that implements the RESTCONF protocol.
+   -  RESTCONF client: a client that implements the RESTCONF protocol.
 
-   o  RESTCONF server: a server that implements the RESTCONF protocol.
+   -  RESTCONF server: a server that implements the RESTCONF protocol.
 
-   o  retrieval request: a request using the GET or HEAD methods.
+   -  retrieval request: a request using the GET or HEAD methods.
 
-   o  schema resource: a resource that is used by the client to retrieve
+   -  schema resource: a resource that is used by the client to retrieve
       a YANG schema with the GET method.  It has a representation with
       the media type "application/yang".
 
-   o  server: a RESTCONF server.
+   -  server: a RESTCONF server.
 
-   o  "stream" list: the set of data resource instances that describe
+   -  "stream" list: the set of data resource instances that describe
       the event stream resources available from the server.  This
       information is defined in the "ietf-restconf-monitoring" module as
       the "stream" list.  It can be retrieved using the target resource
@@ -390,13 +390,13 @@ datastore concepts defined in the Network Configuration Protocol
       stream".  The "stream" list contains information about each
       stream, such as the URL to retrieve the event stream data.
 
-   o  stream resource: an event stream resource.
+   -  stream resource: an event stream resource.
 
 
-   o  target resource: the resource that is associated with a particular
+   -  target resource: the resource that is associated with a particular
       message, identified by the "path" component of the request URI.
 
-   o  yang-data extension: a YANG external statement that conforms to
+   -  yang-data extension: a YANG external statement that conforms to
       the "yang-data" extension statement, found in Section 8.  The
       yang-data extension is used to define YANG data structures that
       are meant to be used as YANG data templates.  These data
@@ -404,7 +404,7 @@ datastore concepts defined in the Network Configuration Protocol
       configuration datastore or as an operational state within the
       server, so normal YANG data definition statements cannot be used.
 
-   o  YANG data template: a schema for modeling protocol message
+   -  YANG data template: a schema for modeling protocol message
       components as conceptual data structures using YANG.  This allows
       the messages to be defined in an encoding-independent manner.
       Each YANG data template is defined with the "yang-data" extension,
@@ -442,19 +442,19 @@ datastore concepts defined in the Network Configuration Protocol
    this document.  The meanings of the symbols in these diagrams are as
    follows:
 
-   o  Brackets "[" and "]" enclose list keys.
+   -  Brackets "[" and "]" enclose list keys.
 
-   o  Abbreviations before data node names: "rw" means configuration
+   -  Abbreviations before data node names: "rw" means configuration
       data (read-write), "ro" means state data (read-only), and "x"
       means operation resource (executable).
 
-   o  Symbols after data node names: "?" means an optional node, "!"
+   -  Symbols after data node names: "?" means an optional node, "!"
       means a presence container, and "*" denotes a list and leaf-list.
 
-   o  Parentheses enclose choice and case nodes, and case nodes are also
+   -  Parentheses enclose choice and case nodes, and case nodes are also
       marked with a colon (":").
 
-   o  Ellipsis ("...") stands for contents of subtrees that are not
+   -  Ellipsis ("...") stands for contents of subtrees that are not
       shown.
 
 ### 1.2.  Subset of NETCONF Functionality
@@ -531,6 +531,7 @@ datastore concepts defined in the Network Configuration Protocol
    The following figure shows the system components if a RESTCONF server
    is co-located with a NETCONF server:
 
+```
          +-----------+           +-----------------+
          |  Web app  | <-------> |                 |
          +-----------+  RESTCONF | network device  |
@@ -540,15 +541,18 @@ datastore concepts defined in the Network Configuration Protocol
          | Client    |  NETCONF  |   |           | |
          +-----------+           |   +-----------+ |
                                  +-----------------+
+```
 
    The following figure shows the system components if a RESTCONF server
    is implemented in a device that does not have a NETCONF server:
 
+```
          +-----------+           +-----------------+
          |  Web app  | <-------> |                 |
          +-----------+  RESTCONF | network device  |
                                  |                 |
                                  +-----------------+
+```
 
    There are interactions between the NETCONF protocol and RESTCONF
    protocol related to edit operations.  It is possible that locks are
@@ -589,9 +593,9 @@ datastore concepts defined in the Network Configuration Protocol
 
    There are two extensibility mechanisms built into RESTCONF:
 
-   o  protocol version
+   -  protocol version
 
-   o  optional capabilities
+   -  optional capabilities
 
    This document defines version 1 of the RESTCONF protocol.  If a
    future version of this protocol is defined, then that document will
@@ -709,7 +713,6 @@ datastore concepts defined in the Network Configuration Protocol
    A server MAY also support the combination of both client certificates
    and an HTTP client authentication scheme, with the determination of
    how to process this combination left as an implementation decision.
-
 
    The RESTCONF client identity derived from the authentication
    mechanism used is hereafter known as the "RESTCONF username" and
@@ -1042,7 +1045,6 @@ datastore concepts defined in the Network Configuration Protocol
    Last-modified timestamps for data resources are discussed in
    Section 3.5.
 
-
    If the RESTCONF server is co-located with a NETCONF server, then the
    last-modified timestamp MUST be for the "running" datastore.  Note
    that it is possible that other protocols can cause the last-modified
@@ -1090,7 +1092,6 @@ datastore concepts defined in the Network Configuration Protocol
    targeted by the request-line of an HTTP method.  Containers, leafs,
    leaf-list entries, list entries, anydata nodes, and anyxml nodes are
    data resources.
-
 
    The representation maintained for each data resource is the
    YANG-defined subtree for that node.  HTTP methods on a data resource
@@ -1169,23 +1170,23 @@ datastore concepts defined in the Network Configuration Protocol
    If a data node in the path expression is a YANG leaf-list node, then
    the leaf-list value MUST be encoded according to the following rules:
 
-   o  The identifier for the leaf-list MUST be encoded using one path
+   -  The identifier for the leaf-list MUST be encoded using one path
       segment [RFC3986].
 
-   o  The path segment is constructed by having the leaf-list name,
+   -  The path segment is constructed by having the leaf-list name,
       followed by an "=" character, followed by the leaf-list value
       (e.g., /restconf/data/top-leaflist=fred).
 
-   o  The leaf-list value is specified as a string, using the canonical
+   -  The leaf-list value is specified as a string, using the canonical
       representation for the YANG data type.  Any reserved characters
       MUST be percent-encoded, according to Sections 2.1 and 2.5 of
       [RFC3986].
 
-   o  YANG 1.1 allows duplicate leaf-list values for non-configuration
+   -  YANG 1.1 allows duplicate leaf-list values for non-configuration
       data.  In this case, there is no mechanism to specify the exact
       matching leaf-list instance.
 
-   o  The comma (",") character is percent-encoded [RFC3986], even
+   -  The comma (",") character is percent-encoded [RFC3986], even
       though multiple key values are not possible for a leaf-list.  This
       is more consistent and avoids special processing rules.
 
@@ -1193,38 +1194,38 @@ datastore concepts defined in the Network Configuration Protocol
    key values for the list (if any) MUST be encoded according to the
    following rules:
 
-   o  The key leaf values for a data resource representing a YANG list
+   -  The key leaf values for a data resource representing a YANG list
       MUST be encoded using one path segment [RFC3986].
 
-   o  If there is only one key leaf value, the path segment is
+   -  If there is only one key leaf value, the path segment is
       constructed by having the list name, followed by an "=" character,
       followed by the single key leaf value.
 
-   o  If there are multiple key leaf values, the path segment is
+   -  If there are multiple key leaf values, the path segment is
       constructed by having the list name, followed by the value of each
       leaf identified in the "key" statement, encoded in the order
       specified in the YANG "key" statement.  Each key leaf value except
       the last one is followed by a comma character.
 
-   o  The key value is specified as a string, using the canonical
+   -  The key value is specified as a string, using the canonical
       representation for the YANG data type.  Any reserved characters
       MUST be percent-encoded, according to Sections 2.1 and 2.5 of
       [RFC3986].  The comma (",") character MUST be percent-encoded if
       it is present in the key value.
 
-   o  All of the components in the "key" statement MUST be encoded.
+   -  All of the components in the "key" statement MUST be encoded.
       Partial instance identifiers are not supported.
 
-   o  Missing key values are not allowed, so two consecutive commas are
+   -  Missing key values are not allowed, so two consecutive commas are
       interpreted as a comma, followed by a zero-length string, followed
       by a comma.  For example, "list1=foo,,baz" would be interpreted as
       a list named "list1" with three key values, and the second key
       value is a zero-length string.
 
-   o  Note that non-configuration lists are not required to define keys.
+   -  Note that non-configuration lists are not required to define keys.
       In this case, a single list instance cannot be accessed.
 
-   o  The "list-instance" Augmented Backus-Naur Form (ABNF) [RFC5234]
+   -  The "list-instance" Augmented Backus-Naur Form (ABNF) [RFC5234]
       rule defined in Section 3.5.3.1 represents the syntax of a list
       instance identifier.
 
@@ -1294,6 +1295,7 @@ datastore concepts defined in the Network Configuration Protocol
    The characters in a key value string are constrained, and some
    characters need to be percent-encoded, as described in Section 3.5.3.
 
+```
    api-path = root *("/" (api-identifier / list-instance))
 
    root = string  ;; replacement string for {+restconf}
@@ -1310,6 +1312,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    identifier = (ALPHA / "_")
                 *(ALPHA / DIGIT / "_" / "-" / ".")
+```
 
 #### 3.5.4.  Default Handling
 
@@ -1874,7 +1877,6 @@ datastore concepts defined in the Network Configuration Protocol
    behavior is defined in Section 7.
 
 
-
 ## 4.  RESTCONF Methods
 
    The RESTCONF protocol uses HTTP methods to identify the CRUD
@@ -1883,6 +1885,7 @@ datastore concepts defined in the Network Configuration Protocol
    The following table shows how the RESTCONF operations relate to
    NETCONF protocol operations.
 
+```
    +----------+-------------------------------------------------------+
    | RESTCONF | NETCONF                                               |
    +----------+-------------------------------------------------------+
@@ -1906,6 +1909,7 @@ datastore concepts defined in the Network Configuration Protocol
    +----------+-------------------------------------------------------+
 
                          CRUD Methods in RESTCONF
+```
 
    The "remove" edit operation attribute for the NETCONF <edit-config>
    RPC operation is not supported by the HTTP DELETE method.  The
@@ -2050,6 +2054,7 @@ datastore concepts defined in the Network Configuration Protocol
    resource.  The server uses the target resource type to determine how
    to process the request.
 
+```
       +-----------+------------------------------------------------+
       | Type      | Description                                    |
       +-----------+------------------------------------------------+
@@ -2059,6 +2064,7 @@ datastore concepts defined in the Network Configuration Protocol
       +-----------+------------------------------------------------+
 
                      Resource Types That Support POST
+```
 
 #### 4.4.1.  Create Resource Mode
 
@@ -2445,8 +2451,9 @@ datastore concepts defined in the Network Configuration Protocol
    | with-defaults | GET,    | Control the retrieval of default values |
    |               | HEAD    |                                         |
    +---------------+---------+-----------------------------------------+
-```
+
                          RESTCONF Query Parameters
+```
 
    Refer to Appendix B.3 for examples of query parameter usage.
 
@@ -2504,7 +2511,6 @@ datastore concepts defined in the Network Configuration Protocol
    This parameter is only allowed for GET methods on API, datastore, and
    data resources.  A "400 Bad Request" status-line is returned if used
    for other methods or resource types.
-
 
    By default, the server will include all sub-resources within a
    retrieved resource that have the same resource type as the requested
@@ -2574,17 +2580,17 @@ datastore concepts defined in the Network Configuration Protocol
    The format of this parameter is an XPath 1.0 expression [XPath] and
    is evaluated in the following context:
 
-   o  The set of namespace declarations is the set of prefix and
+   -  The set of namespace declarations is the set of prefix and
       namespace pairs for all supported YANG modules, where the prefix
       is the YANG module name and the namespace is as defined by the
       "namespace" statement in the YANG module.
 
-   o  The function library is the core function library defined in
+   -  The function library is the core function library defined in
       XPath 1.0, plus any functions defined by the data model.
 
-   o  The set of variable bindings is empty.
+   -  The set of variable bindings is empty.
 
-   o  The context node is the root node.
+   -  The context node is the root node.
 
    The "filter" query parameter is used as defined in Section 3.6 of
    [RFC5277].  If the boolean result of the expression is "true" when
@@ -2603,6 +2609,7 @@ datastore concepts defined in the Network Configuration Protocol
 
    The allowed values are:
 
+```
    +--------+----------------------------------------------------------+
    | Value  | Description                                              |
    +--------+----------------------------------------------------------+
@@ -2616,6 +2623,7 @@ datastore concepts defined in the Network Configuration Protocol
    | after  | Insert the new data after the insertion point, as        |
    |        | specified by the value of the "point" parameter.         |
    +--------+----------------------------------------------------------+
+```
 
    The default value is "last".
 
@@ -2725,6 +2733,7 @@ datastore concepts defined in the Network Configuration Protocol
    behavior described in Section 4.5.1 of [RFC6243], except applied to
    the RESTCONF GET operation instead of the NETCONF operations.
 
+```
    +-------------------+-----------------------------------------------+
    | Value             | Description                                   |
    +-------------------+-----------------------------------------------+
@@ -2739,6 +2748,7 @@ datastore concepts defined in the Network Configuration Protocol
    | report-all-tagged | All data nodes are reported, and defaults are |
    |                   | tagged                                        |
    +-------------------+-----------------------------------------------+
+```
 
    If the "with-defaults" parameter is set to "report-all", then the
    server MUST adhere to the default-reporting behavior defined in
@@ -2789,7 +2799,6 @@ datastore concepts defined in the Network Configuration Protocol
    multiple datastore edits within a single message.
 
 
-
 ### 5.1.  Request URI Structure
 
    Resources are represented with URIs following the structure for
@@ -2817,21 +2826,21 @@ datastore concepts defined in the Network Configuration Protocol
          <query> is the query parameter list
 ```
 
-   o  method: the HTTP method identifying the RESTCONF operation
+   -  method: the HTTP method identifying the RESTCONF operation
       requested by the client, to act upon the target resource specified
       in the request URI.  RESTCONF operation details are described in
       Section 4.
 
-   o  entry: the root of the RESTCONF API configured on this HTTP
+   -  entry: the root of the RESTCONF API configured on this HTTP
       server, discovered by getting the "/.well-known/host-meta"
       resource, as described in Section 3.1.
 
-   o  resource: the path expression identifying the resource that is
+   -  resource: the path expression identifying the resource that is
       being accessed by the RESTCONF operation.  If this field is not
       present, then the target resource is the API itself, represented
       by the YANG data template named "yang-api", found in Section 8.
 
-   o  query: the set of parameters associated with the RESTCONF message;
+   -  query: the set of parameters associated with the RESTCONF message;
       see Section 3.4 of [RFC3986].  RESTCONF parameters have the
       familiar form of "name=value" pairs.  Most query parameters are
       optional to implement by the server and optional to use by the
@@ -3129,7 +3138,6 @@ datastore concepts defined in the Network Configuration Protocol
    The server MAY support query parameters for a GET method on this
    resource.  These parameters are specific to each event stream.
 
-
    For example:
 
    The client might send the following request:
@@ -3418,7 +3426,6 @@ datastore concepts defined in the Network Configuration Protocol
    The semantics and syntax for RESTCONF error messages are defined with
    the "yang-errors" YANG data template extension, found in Section 8.
 
-
    Examples:
 
    The following example shows an error returned for a "lock-denied"
@@ -3435,10 +3442,7 @@ datastore concepts defined in the Network Configuration Protocol
       Accept: application/yang-data+json
 ```
 
-
-
    The server might respond as follows:
-
 
 ```
       HTTP/1.1 409 Conflict
@@ -3903,11 +3907,10 @@ datastore concepts defined in the Network Configuration Protocol
                     RESTCONF "defaults" Capability URI
 ```
 
-
-
    The URI MUST contain a query parameter named "basic-mode" with one of
    the values listed below:
 
+```
    +------------+------------------------------------------------------+
    | Value      | Description                                          |
    +------------+------------------------------------------------------+
@@ -3919,6 +3922,7 @@ datastore concepts defined in the Network Configuration Protocol
    | explicit   | Values set by the client are never considered        |
    |            | default                                              |
    +------------+------------------------------------------------------+
+```
 
    The "basic-mode" definitions are specified in "With-defaults
    Capability for NETCONF" [RFC6243].
@@ -3953,7 +3957,6 @@ datastore concepts defined in the Network Configuration Protocol
 
    Stream resources are defined in Section 3.8.  Notifications are
    defined in Section 6.
-
 
 
 ### 9.3.  RESTCONF Monitoring Module
@@ -4247,7 +4250,7 @@ datastore concepts defined in the Network Configuration Protocol
    Person & email address to contact for further information: See
       the Authors' Addresses section of RFC 8040.
 
-
+```
    Intended usage: COMMON
 
    Restrictions on usage: N/A
@@ -4258,6 +4261,7 @@ datastore concepts defined in the Network Configuration Protocol
       (mailto:iesg@ietf.org).
 
    Provisional registration? (standards tree only): no
+```
 
 #### 11.3.2.  Media Type "application/yang-data+json"
 
@@ -4324,12 +4328,12 @@ datastore concepts defined in the Network Configuration Protocol
    policy for this registry is "IETF Review" [RFC5226].  The registry
    shall record the following for each entry:
 
-   o  the name of the RESTCONF capability.  By convention, this name
+   -  the name of the RESTCONF capability.  By convention, this name
       begins with the colon (":") character.
 
-   o  the URN for the RESTCONF capability.
+   -  the URN for the RESTCONF capability.
 
-   o  the reference for the document registering the value.
+   -  the reference for the document registering the value.
 
 
    This document registers several capability identifiers in the
@@ -4357,6 +4361,7 @@ datastore concepts defined in the Network Configuration Protocol
    Sub-namespace for Registered Protocol Parameter Identifiers" registry
    defined in [RFC3553].
 
+```
       Registry Name: restconf
 
       Specification: RFC 8040
@@ -4365,7 +4370,7 @@ datastore concepts defined in the Network Configuration Protocol
 
       Index value:  Sub-parameters MUST be specified in UTF-8, using
          standard URI encoding where necessary.
-
+```
 
 
 ## 12.  Security Considerations
