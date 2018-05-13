@@ -1,167 +1,147 @@
-# RESTCONF Protocol
+# RESTCONF 协议 RFC8040
 
-## Abstract
+## 摘要
+本文档描述了一种基于HTTP的协议，该协议提供编程接口，用于访问YANG中定义的数据，使用网络配置协议中定义的数据存储概念（NETCONF）。
 
-This document describes an HTTP-based protocol that provides a
-programmatic interface for accessing data defined in YANG, using the
-datastore concepts defined in the Network Configuration Protocol
-(NETCONF).
+## 本备忘录状态
+这是一个互联网标准跟踪文件。
 
-## Status of This Memo
+本文档是Internet工程任务组（IETF）的产品。它代表了IETF社区的共识。它已经接受公众评论并且已经被互联网工程指导组（IESG）批准发布。有关Internet标准的更多信息，请参阅RFC 7841的第2部分。
 
-   This is an Internet Standards Track document.
+有关本文档当前状态的信息，所有勘误表以及如何提供反馈意见，详见http://www.rfc-editor.org/info/rfc8040.
 
-   This document is a product of the Internet Engineering Task Force
-   (IETF).  It represents the consensus of the IETF community.  It has
-   received public review and has been approved for publication by the
-   Internet Engineering Steering Group (IESG).  Further information on
-   Internet Standards is available in Section 2 of RFC 7841.
+## 版权声明
 
-   Information about the current status of this document, any errata,
-   and how to provide feedback on it may be obtained at
-   http://www.rfc-editor.org/info/rfc8040.
+版权所有（c）2017 IETF Trust以及被确定为文档作者的人员。版权所有。
 
-## Copyright Notice
+本文件受制于BCP 78和IETF信托关于IETF文件的法律条款（http://trustee.ietf.org/license-info），该文件在本文件发布之日生效。请仔细阅读这些文档，因为它们描述了您对本文档的权利和限制。代码从本文档中提取的组件必须包含“信任法律条款”第4.e节中所述的简化BSD许可证文本，并且没有提供任何保证，如简化BSD许可证中所述。
 
-   Copyright (c) 2017 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
-
-## Table of Contents
- - 1. Introduction 
-    - 1.1. Terminology 
+## 目录
+ - 1. 介绍 
+    - 1.1. 术语 
         -  1.1.1. NETCONF
         -  1.1.2. HTTP 
         -  1.1.3. YANG 
-        -  1.1.4. NETCONF Notifications
+        -  1.1.4. NETCONF 通知
         -  1.1.5. Terms
-        -  1.1.6. URI Template and Examples
-        -  1.1.7. Tree Diagrams
-    - 1.2. Subset of NETCONF Functionality 
-    - 1.3. Data-Model-Driven API 
-    - 1.4. Coexistence with NETCONF
-    - 1.5. RESTCONF Extensibility
- - 2. Transport Protocol 
-    - 2.1. Integrity and Confidentiality 
-    - 2.2. HTTPS with X.509v3 Certificates 
-    - 2.3. Certificate Validation
-    - 2.4. Authenticated Server Identity 
-    - 2.5. Authenticated Client Identity 
- - 3. Resources
-    - 3.1. Root Resource Discovery 
-    - 3.2. RESTCONF Media Types
-    - 3.3. API Resource
+        -  1.1.6. URI 模板和示例
+        -  1.1.7. 树图
+    - 1.2. NETCONF功能的子集
+    - 1.3. 数据模型驱动的API
+    - 1.4. 与NETCONF共存
+    - 1.5. RESTCONF可扩展性
+ - 2. 传输协议 
+    - 2.1. 诚信和保密 
+    - 2.2. 使用X.509v3证书的HTTPS
+    - 2.3. 证书验证
+    - 2.4. 已认证的服务器身份 
+    - 2.5. 已认证的客户端身份 
+ - 3. 资源
+    - 3.1. Root资源发现 
+    - 3.2. RESTCONF媒体类型
+    - 3.3. API资源
         -  3.3.1. {+restconf}/data 
         -  3.3.2. {+restconf}/operations 
         -  3.3.3. {+restconf}/yang-library-version 
-    - 3.4. Datastore Resource
-        -  3.4.1. Edit Collision Prevention
-    - 3.5. Data Resource 
-        -  3.5.1. Timestamp
-        -  3.5.2. Entity-Tag 
-        -  3.5.3. Encoding Data Resource Identifiers in the Request URI
-        -  3.5.4. Default Handling 
-    - 3.6. Operation Resource
-        -  3.6.1. Encoding Operation Resource Input Parameters 
-        -  3.6.2. Encoding Operation Resource Output Parameters
-        -  3.6.3. Encoding Operation Resource Errors 
-    - 3.7. Schema Resource 
-    - 3.8. Event Stream Resource 
-    - 3.9. "errors" YANG Data Template 
- - 4. RESTCONF Methods 
+    - 3.4. 数据存储资源
+        -  3.4.1. 编辑碰撞预防
+    - 3.5. 数据资源 
+        -  3.5.1. 时间戳
+        -  3.5.2. 实体标签 
+        -  3.5.3. 在请求URI中编码数据资源标识符
+        -  3.5.4. 默认处理 
+    - 3.6. 操作资源
+        -  3.6.1. 编码操作资源输入参数
+        -  3.6.2. 编码操作资源输出参数
+        -  3.6.3. 编码操作资源错误 
+    - 3.7. 模式资源 
+    - 3.8. 事件流资源
+    - 3.9. "errors" YANG数据模板 
+ - 4. RESTCONF 方法 
     - 4.1. OPTIONS 
     - 4.2. HEAD
     - 4.3. GET 
     - 4.4. POST
-        -  4.4.1. Create Resource Mode 
-        -  4.4.2. Invoke Operation Mode
+        -  4.4.1. 创建资源模式 
+        -  4.4.2. 调用操作模式
     - 4.5. PUT 
     - 4.6. PATCH 
         -  4.6.1. Plain Patch
     - 4.7. DELETE
-    - 4.8. Query Parameters
-        -  4.8.1. The "content" Query Parameter
-        -  4.8.2. The "depth" Query Parameter
-        -  4.8.3. The "fields" Query Parameter 
-        -  4.8.4. The "filter" Query Parameter 
-        -  4.8.5. The "insert" Query Parameter 
-        -  4.8.6. The "point" Query Parameter
-        -  4.8.7. The "start-time" Query Parameter 
-        -  4.8.8. The "stop-time" Query Parameter
-        -  4.8.9. The "with-defaults" Query Parameter
- - 5. Messages 
-    - 5.1. Request URI Structure 
-    - 5.2. Message Encoding
-    - 5.3. RESTCONF Metadata 
-        -  5.3.1. XML Metadata Encoding Example
-        -  5.3.2. JSON Metadata Encoding Example 
-    - 5.4. Return Status 
-    - 5.5. Message Caching 
- - 6. Notifications
-    - 6.1. Server Support
-    - 6.2. Event Streams 
-    - 6.3. Subscribing to Receive Notifications
-        -  6.3.1. NETCONF Event Stream 
-    - 6.4. Receiving Event Notifications 
- - 7. Error Reporting
-    - 7.1. Error Response Message
- - 8. RESTCONF Module
- - 9. RESTCONF Monitoring
+    - 4.8. 查询参数
+        -  4.8.1. "content" 查询参数
+        -  4.8.2. "depth" 查询参数
+        -  4.8.3. "fields" 查询参数 
+        -  4.8.4. "filter" 查询参数 
+        -  4.8.5. "insert" 查询参数 
+        -  4.8.6. "point" 查询参数
+        -  4.8.7. "start-time" 查询参数 
+        -  4.8.8. "stop-time" 查询参数
+        -  4.8.9. "with-defaults" 查询参数
+ - 5. 消息 
+    - 5.1. 请求URI结构 
+    - 5.2. 消息编码
+    - 5.3. RESTCONF 元数据 
+        -  5.3.1. XML 元数据编码示例
+        -  5.3.2. JSON 元数据编码示例 
+    - 5.4. Return 状态 
+    - 5.5. 消息缓存 
+ - 6. 通知
+    - 6.1. 服务器支持
+    - 6.2. 事件流 
+    - 6.3. 订阅接收通知
+        -  6.3.1. NETCONF 事件流 
+    - 6.4. 接收事件通知 
+ - 7. Error
+    - 7.1. Error响应消息
+ - 8. RESTCONF 模块
+ - 9. RESTCONF 监测
     - 9.1. restconf-state/capabilities 
-        -  9.1.1. Query Parameter URIs 
-        -  9.1.2. The "defaults" Protocol Capability URI 
+        -  9.1.1. 查询 URIs 
+        -  9.1.2. "defaults" 协议能力 URI 
     - 9.2. restconf-state/streams
-    - 9.3. RESTCONF Monitoring Module
- - 10. YANG Module Library 
+    - 9.3. RESTCONF 监控模块
+ - 10. YANG 模块 Library 
     - 10.1. modules-state/module 
- - 11. IANA Considerations 
-    - 11.1. The "restconf" Relation Type 
-    - 11.2. Registrations for New URIs and YANG Modules
-    - 11.3. Media Types
-        -  11.3.1. Media Type "application/yang-data+xml"
-        -  11.3.2. Media Type "application/yang-data+json" 
-    - 11.4. RESTCONF Capability URNs 
-    - 11.5. Registration of "restconf" URN Sub-namespace 
- - 12. Security Considerations 
- - 13. References
-    - 13.1. Normative References 
-    - 13.2. Informative References 
- - Appendix A. Example YANG Module 
-    - A.1. "example-jukebox" YANG Module
- - Appendix B. RESTCONF Message Examples 
-    - B.1. Resource Retrieval Examples
-       - B.1.1. Retrieve the Top-Level API Resource
-       - B.1.2. Retrieve the Server Module Information 
-       - B.1.3. Retrieve the Server Capability Information 
-    - B.2. Data Resource and Datastore Resource Examples
-       - B.2.1. Create New Data Resources
-       - B.2.2. Detect Datastore Resource Entity-Tag Change
-       - B.2.3. Edit a Datastore Resource
-       - B.2.4. Replace a Datastore Resource 
-       - B.2.5. Edit a Data Resource 
-    - B.3. Query Parameter Examples 
-       - B.3.1. "content" Parameter
-       - B.3.2. "depth" Parameter
-       - B.3.3. "fields" Parameter 
-       - B.3.4. "insert" Parameter 
-       - B.3.5. "point" Parameter
-       - B.3.6. "filter" Parameter 
-       - B.3.7. "start-time" Parameter 
-       - B.3.8. "stop-time" Parameter
-       - B.3.9. "with-defaults" Parameter
-   - Acknowledgements
-   - Authors' Addresses
+ - 11. IANA 考虑事项 
+    - 11.1. "restconf" 关系类型 
+    - 11.2. 注册新的 URIs 和 YANG 模型
+    - 11.3. 媒体类型
+        -  11.3.1. 媒体类型 "application/yang-data+xml"
+        -  11.3.2. 媒体类型 "application/yang-data+json" 
+    - 11.4. RESTCONF URNs 能力
+    - 11.5. "restconf" URN 子空间注册
+ - 12. 安全
+ - 13. 参考
+    - 13.1. 规范性参考文献 
+    - 13.2. 信息性参考 
+ - 附录 A.示例YANG模块
+    - A.1. "example-jukebox" YANG 模型
+ - 附录 B. RESTCONF 消息示例 
+    - B.1. 资源检索示例
+       - B.1.1. 检索顶级API资源
+       - B.1.2. 检索服务器模块信息 
+       - B.1.3. 检索服务器功能信息 
+    - B.2. 数据资源和数据存储资源示例
+       - B.2.1. 创建新的数据资源
+       - B.2.2. 检测数据存储资源实体 - 标签更改
+       - B.2.3. 编辑数据存储资源
+       - B.2.4. 替换数据存储资源 
+       - B.2.5. 编辑数据资源 
+    - B.3. 查询参数示例 
+       - B.3.1. "content" 参数
+       - B.3.2. "depth" 参数
+       - B.3.3. "fields" 参数 
+       - B.3.4. "insert" 参数 
+       - B.3.5. "point" 参数
+       - B.3.6. "filter" 参数 
+       - B.3.7. "start-time" 参数 
+       - B.3.8. "stop-time" 参数
+       - B.3.9. "with-defaults" 参数
+   - 致谢
+   - 作者的地址
 
-## 1.  Introduction
+## 1. 介绍
 
    There is a need for standard mechanisms to allow Web applications to
    access the configuration data, state data, data-model-specific Remote
